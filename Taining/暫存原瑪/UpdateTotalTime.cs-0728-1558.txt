@@ -1,0 +1,79 @@
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Taining.Function
+{
+    public static class UpdateTotalTime
+    {
+        /// <summary>
+        /// 自動計算所有「程序」節點的總時間，並自動補開始結束節點和串連。
+        /// </summary>
+        public static void Update(List<NodeData> nodeList)
+        {
+            // 排除「開始」與「結束」後，抓出流程主幹（按 StepId 排序以防萬一）
+            var mainPrograms = nodeList
+                .Where(n => n.ShapeType == "程序" && n.StepId != "0" && n.StepId != "999")
+                .OrderBy(n => n.StepId) // 若你的StepId不純數字可自訂排序邏輯
+                .ToList();
+
+            // 1. 確保有「開始」節點
+            var startNode = nodeList.FirstOrDefault(n => n.StepId == "0");
+            if (startNode == null)
+            {
+                startNode = new NodeData
+                {
+                    StepId = "0",
+                    Description = "開始",
+                    ShapeType = "起始"
+                };
+                nodeList.Insert(0, startNode);
+            }
+
+            // 2. 確保有「結束」節點
+            var endNode = nodeList.FirstOrDefault(n => n.StepId == "999");
+            if (endNode == null)
+            {
+                endNode = new NodeData
+                {
+                    StepId = "999",
+                    Description = "結束",
+                    ShapeType = "起始"
+                };
+                nodeList.Add(endNode);
+            }
+
+            // 3. 開始節點 NextStepId 指向第一個主流程
+            if (mainPrograms.Any())
+            {
+                startNode.NextStepId = mainPrograms.First().StepId;
+            }
+            else
+            {
+                startNode.NextStepId = "999"; // 沒有其他節點時直接到結束
+            }
+
+            // 4. 最後一個主流程節點 NextStepId 指向結束
+            if (mainPrograms.Any())
+            {
+                mainPrograms.Last().NextStepId = "999";
+            }
+
+            // 5. 計算每個「程序」的總時間
+            foreach (var programNode in nodeList.Where(n => n.ShapeType == "程序"))
+            {
+                string prefix = programNode.StepId;
+                var relatedNodes = nodeList
+                    .Where(n => n.StepId != null && n.StepId.StartsWith(prefix))
+                    .ToList();
+
+                double total = 0;
+                foreach (var n in relatedNodes)
+                {
+                    if (double.TryParse(n.Time, out double t))
+                        total += t;
+                }
+                programNode.TotalTime = total.ToString();
+            }
+        }
+    }
+}
