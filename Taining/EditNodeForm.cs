@@ -71,6 +71,7 @@ namespace Taining
 
         private void EditNodeForm_Load(object sender, EventArgs e)
         {
+            txtStepId_error.Visible = false;
             txtDescription_error.Visible = false;
             txtShapeType_error.Visible = false;
             txtTime_error.Visible = false;
