@@ -99,7 +99,7 @@
             // txtShapeType
             // 
             txtShapeType.FormattingEnabled = true;
-            txtShapeType.Items.AddRange(new object[] { "程序", "子程序", "物件" });
+            txtShapeType.Items.AddRange(new object[] { "線上", "預裝", "選配" });
             txtShapeType.Location = new Point(12, 194);
             txtShapeType.Name = "txtShapeType";
             txtShapeType.Size = new Size(240, 23);
@@ -191,7 +191,7 @@
             // txtNextStepId
             // 
             txtNextStepId.FormattingEnabled = true;
-            txtNextStepId.Items.AddRange(new object[] { "程序", "子程序", "物件" });
+            txtNextStepId.Items.AddRange(new object[] {"線上", "預裝", "選配" });
             txtNextStepId.Location = new Point(12, 307);
             txtNextStepId.Name = "txtNextStepId";
             txtNextStepId.Size = new Size(240, 23);

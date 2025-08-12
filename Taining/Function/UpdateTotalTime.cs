@@ -7,7 +7,7 @@ namespace Taining.Function
     {
         public static void Update(List<NodeData> nodeList)
         {
-            foreach (var programNode in nodeList.Where(n => n.ShapeType == "程序"))
+            foreach (var programNode in nodeList.Where(n => n.ShapeType == "線上"))
             {
                 var visited = new HashSet<string>(); // 避免重複加總
                 double total = 0;
@@ -30,7 +30,7 @@ namespace Taining.Function
                     n.NextStepId.Split(new[] { ',', ';' }, System.StringSplitOptions.RemoveEmptyEntries)
                         .Select(x => x.Trim())
                         .Contains(targetStepId)
-                    && n.ShapeType != "程序"
+                    && n.ShapeType != "線上"
                     && !visited.Contains(n.StepId)
                 ).ToList();
 
