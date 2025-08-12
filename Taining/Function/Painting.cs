@@ -24,9 +24,9 @@ namespace Taining.Function
                 //AddNodes(graph, nodesRaw, "子程序", Microsoft.Msagl.Drawing.Color.Yellow);
                 //AddNodes(graph, nodesRaw, "物件", Microsoft.Msagl.Drawing.Color.White);
                 AddNodesByContains(graph, nodesRaw, "起始", Microsoft.Msagl.Drawing.Color.LightBlue);
-                AddNodesByContains(graph, nodesRaw, "程序", Microsoft.Msagl.Drawing.Color.LightGreen);
-                AddNodesByContains(graph, nodesRaw, "子程序", Microsoft.Msagl.Drawing.Color.Yellow);
-                AddNodesByContains(graph, nodesRaw, "物件", Microsoft.Msagl.Drawing.Color.White);
+                AddNodesByContains(graph, nodesRaw, "線上", Microsoft.Msagl.Drawing.Color.LightGreen);
+                AddNodesByContains(graph, nodesRaw, "預裝", Microsoft.Msagl.Drawing.Color.Yellow);
+                AddNodesByContains(graph, nodesRaw, "選配", Microsoft.Msagl.Drawing.Color.White);
                 AddNodes_OthersAsRed(graph, nodesRaw); // 處理所有其他型態，顏色設為紅色
 
                 AddInvisibleMainEdges(graph, nodesRaw);
@@ -77,7 +77,7 @@ namespace Taining.Function
         // invisible edge 串接主流程（只有沒有真實線才加）
         private static void AddInvisibleMainEdges(Graph graph, List<NodeData> nodesRaw)
         {
-            var greenNodes = nodesRaw.Where(n => (n.ShapeType ?? "").Trim() == "程序").ToList();
+            var greenNodes = nodesRaw.Where(n => (n.ShapeType ?? "").Trim() == "線上").ToList();
             for (int i = 1; i < greenNodes.Count; i++)
             {
                 string fromId = greenNodes[i - 1].StepId;
@@ -156,7 +156,7 @@ namespace Taining.Function
 
         private static void AddNodes_OthersAsRed(Graph graph, List<NodeData> nodesRaw)
         {
-            var knownTypes = new HashSet<string> { "起始", "程序", "子程序", "物件" };
+            var knownTypes = new HashSet<string> { "起始", "線上", "預裝", "選配" };
             var otherNodes = nodesRaw.Where(n => !knownTypes.Contains((n.ShapeType ?? "").Trim())).ToList();
             foreach (var n in otherNodes)
             {

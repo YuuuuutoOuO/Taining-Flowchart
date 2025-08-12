@@ -32,10 +32,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             changeTargetMenuItem = new ToolStripMenuItem();
             contextMenuNode = new ContextMenuStrip(components);
-            changeNodeToolStripMenuItem = new ToolStripMenuItem();
             editNodeToolStripMenuItem = new ToolStripMenuItem();
             createNodeToolStripMenuItem = new ToolStripMenuItem();
             deleteNodeToolStripMenuItem = new ToolStripMenuItem();
+            changeNodeToolStripMenuItem = new ToolStripMenuItem();
             bm_readfile = new Button();
             label1 = new Label();
             cv_flowchart = new Microsoft.Msagl.GraphViewerGdi.GViewer();
@@ -64,13 +64,6 @@
             contextMenuNode.Size = new Size(123, 92);
             contextMenuNode.Opening += contextMenuNode_Opening;
             // 
-            // changeNodeToolStripMenuItem
-            // 
-            changeNodeToolStripMenuItem.Name = "changeNodeToolStripMenuItem";
-            changeNodeToolStripMenuItem.Size = new Size(122, 22);
-            changeNodeToolStripMenuItem.Text = "選擇節點";
-            changeNodeToolStripMenuItem.Visible = false;
-            // 
             // editNodeToolStripMenuItem
             // 
             editNodeToolStripMenuItem.Name = "editNodeToolStripMenuItem";
@@ -88,6 +81,13 @@
             deleteNodeToolStripMenuItem.Name = "deleteNodeToolStripMenuItem";
             deleteNodeToolStripMenuItem.Size = new Size(122, 22);
             deleteNodeToolStripMenuItem.Text = "刪除節點";
+            // 
+            // changeNodeToolStripMenuItem
+            // 
+            changeNodeToolStripMenuItem.Name = "changeNodeToolStripMenuItem";
+            changeNodeToolStripMenuItem.Size = new Size(122, 22);
+            changeNodeToolStripMenuItem.Text = "選擇節點";
+            changeNodeToolStripMenuItem.Visible = false;
             // 
             // bm_readfile
             // 

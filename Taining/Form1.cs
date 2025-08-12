@@ -22,7 +22,7 @@ namespace Taining
         // 建構子：初始化表單元件
         public Form1()
         {
-            InitializeComponent(); // 建立表單上的所有元件
+            InitializeComponent(); // 建立表單上的所有元件A
         }
 
         private void Form1_Load(object sender, EventArgs e)

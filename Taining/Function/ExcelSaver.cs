@@ -21,7 +21,7 @@ namespace Taining.Function
                 ws.Cells[1, 2].Value = "程序步驟描述";
                 ws.Cells[1, 3].Value = "工序識別碼";
                 ws.Cells[1, 4].Value = "下一個步驟識別碼";
-                ws.Cells[1, 5].Value = "圖形類型";
+                ws.Cells[1, 5].Value = "類型";
                 ws.Cells[1, 6].Value = "替代文字";
                 ws.Cells[1, 7].Value = "執行時間";
                 ws.Cells[1, 8].Value = "總時間";
