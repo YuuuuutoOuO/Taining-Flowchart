@@ -4,14 +4,35 @@ using System.Linq;
 using System.Windows.Forms;
 using Microsoft.Msagl.GraphViewerGdi;
 using Taining.Function;
+using System.Globalization; // 新增，給座標轉換用
 
 namespace Taining
 {
     public static class CvFlowchartMenu
     {
+        /// <summary>
+        /// 儲存目前畫布中節點的 X、Y 座標到 nodeList
+        /// </summary>
+        private static void SaveCurrentPositions(List<NodeData> nodeList, GViewer gViewer)
+        {
+            if (gViewer.Graph == null) return;
+
+            foreach (var n in gViewer.Graph.Nodes)
+            {
+                var nodeData = nodeList.FirstOrDefault(nd => nd.StepId == n.Id);
+                if (nodeData != null && n.GeometryNode != null)
+                {
+                    nodeData.X = n.GeometryNode.Center.X.ToString(CultureInfo.InvariantCulture);
+                    nodeData.Y = n.GeometryNode.Center.Y.ToString(CultureInfo.InvariantCulture);
+                }
+            }
+        }
+
         // 變更連線
         public static void ChangeEdge(List<NodeData> nodeList, string selectedNodeId, GViewer cv_flowchart)
         {
+            SaveCurrentPositions(nodeList, cv_flowchart); // 保留目前位置
+
             var selectForm = new SelectTargetForm(nodeList, selectedNodeId);
             if (selectForm.ShowDialog() == DialogResult.OK)
             {
@@ -29,6 +50,8 @@ namespace Taining
         // 刪除節點
         public static void DeleteNode(List<NodeData> nodeList, string selectedNodeId, GViewer cv_flowchart)
         {
+            SaveCurrentPositions(nodeList, cv_flowchart); // 保留目前位置
+
             if (string.IsNullOrEmpty(selectedNodeId)) return;
             var nodeToDelete = nodeList.FirstOrDefault(n => n.StepId == selectedNodeId);
             if (nodeToDelete == null) return;
@@ -62,6 +85,8 @@ namespace Taining
         // 編輯節點
         public static void EditNode(List<NodeData> nodeList, string selectedNodeId, GViewer cv_flowchart)
         {
+            SaveCurrentPositions(nodeList, cv_flowchart); // 保留目前位置
+
             var node = nodeList.FirstOrDefault(n => n.StepId == selectedNodeId);
             if (node == null) return;
 
@@ -87,6 +112,8 @@ namespace Taining
         // 新增節點
         public static void CreateNode(List<NodeData> nodeList, GViewer cv_flowchart)
         {
+            SaveCurrentPositions(nodeList, cv_flowchart); // 保留目前位置
+
             // 傳目前所有 StepId 給 AddNodeForm
             var allStepIds = nodeList.Select(n => n.StepId).ToList();
             var addNodeForm = new AddNodeForm(allStepIds);
